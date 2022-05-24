@@ -10,6 +10,7 @@ function getWeatherData(location) {
 function processWeatherData(weatherData) {
   const neededWeatherData = {
     name: weatherData.name,
+    weather: weatherData.weather[0].main,
     temp: weatherData.main.temp,
   };
 
@@ -19,6 +20,7 @@ function processWeatherData(weatherData) {
 const cityInput = document.querySelector('input[name="city"]');
 const getWeatherDataBtn = document.querySelector('input[type="submit"]');
 const cityNameDisplay = document.querySelector("#city-name");
+const cityWeatherDisplay = document.querySelector("#city-weather");
 const cityTempDisplay = document.querySelector("#city-temp");
 const convertBtn = document.querySelector("#convert-btn");
 
@@ -30,6 +32,7 @@ getWeatherDataBtn.addEventListener("click", (event) => {
     .then((data) => processWeatherData(data))
     .then((data) => {
       cityNameDisplay.textContent = data.name;
+      cityWeatherDisplay.textContent = data.weather;
       cityTempDisplay.textContent = data.temp;
       convertBtn.hidden = false;
     });
