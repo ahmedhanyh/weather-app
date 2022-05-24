@@ -16,7 +16,14 @@ function processWeatherData(weatherData) {
   return neededWeatherData;
 }
 
-let loc = prompt("Enter a city name: ", "Cairo");
-getWeatherData(loc)
-  .then((data) => processWeatherData(data))
-  .then((data) => console.log(data));
+const cityInput = document.querySelector('input[name="city"]');
+const getWeatherDataBtn = document.querySelector('input[type="submit"]');
+
+getWeatherDataBtn.addEventListener("click", (event) => {
+  event.preventDefault();
+  const city = cityInput.value;
+
+  getWeatherData(city)
+    .then((data) => processWeatherData(data))
+    .then((data) => console.log(data));
+});
