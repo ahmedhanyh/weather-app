@@ -1,0 +1,23 @@
+{
+  "name": "weather-app",
+  "version": "1.0.0",
+  "description": "In this project I'm applying my knowledge of Asynchronous JS (Callbacks, Promises, Async+Await) and\r working with APIs.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ahmedhanyh/weather-app.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ahmedhanyh/weather-app/issues"
+  },
+  "homepage": "https://github.com/ahmedhanyh/weather-app#readme",
+  "devDependencies": {
+    "prettier": "2.6.2"
+  }
+}
