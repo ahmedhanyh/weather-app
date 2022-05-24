@@ -18,6 +18,8 @@ function processWeatherData(weatherData) {
 
 const cityInput = document.querySelector('input[name="city"]');
 const getWeatherDataBtn = document.querySelector('input[type="submit"]');
+const cityNameDisplay = document.querySelector("#city-name");
+const cityTempDisplay = document.querySelector("#city-temp");
 
 getWeatherDataBtn.addEventListener("click", (event) => {
   event.preventDefault();
@@ -25,5 +27,8 @@ getWeatherDataBtn.addEventListener("click", (event) => {
 
   getWeatherData(city)
     .then((data) => processWeatherData(data))
-    .then((data) => console.log(data));
+    .then((data) => {
+      cityNameDisplay.textContent = data.name;
+      cityTempDisplay.textContent = data.temp;
+    });
 });
