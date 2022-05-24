@@ -20,6 +20,7 @@ const cityInput = document.querySelector('input[name="city"]');
 const getWeatherDataBtn = document.querySelector('input[type="submit"]');
 const cityNameDisplay = document.querySelector("#city-name");
 const cityTempDisplay = document.querySelector("#city-temp");
+const convertBtn = document.querySelector("#convert-btn");
 
 getWeatherDataBtn.addEventListener("click", (event) => {
   event.preventDefault();
@@ -30,5 +31,28 @@ getWeatherDataBtn.addEventListener("click", (event) => {
     .then((data) => {
       cityNameDisplay.textContent = data.name;
       cityTempDisplay.textContent = data.temp;
+      convertBtn.hidden = false;
     });
+});
+
+let currentTempUnit = "c";
+
+function c_to_f(temp) {
+  return (temp * (9 / 5) + 32).toFixed(2);
+}
+
+function f_to_c(temp) {
+  return ((temp - 32) * (5 / 9)).toFixed(2);
+}
+
+convertBtn.addEventListener("click", () => {
+  if (currentTempUnit === "c") {
+    cityTempDisplay.textContent = c_to_f(cityTempDisplay.textContent);
+    convertBtn.textContent = "Convert to Celsius";
+    currentTempUnit = "f";
+  } else {
+    cityTempDisplay.textContent = f_to_c(cityTempDisplay.textContent);
+    currentTempUnit = "c";
+    convertBtn.textContent = "Convert to Fahrenheit";
+  }
 });
