@@ -1,16 +1,21 @@
 const API_KEY = "86a265bad4b9f62b751292b45e1cbdae";
 
-function getWeatherData(location) {
-  return fetch(
-    `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${API_KEY}&units=metric`,
-    { mode: "cors" }
-  ).then((response) => {
+async function getWeatherData(location) {
+  try {
+    const response = await fetch(
+      `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${API_KEY}&units=metric`,
+      { mode: "cors" }
+    );
+
     if (!response.ok) {
-      throw Error("Couldn't match city");
+      throw Error("Couldn't find any city name that matches your input.");
     }
 
-    return response.json();
-  });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    throw error;
+  }
 }
 
 function processWeatherData(weatherData) {
@@ -30,20 +35,25 @@ const cityWeatherDisplay = document.querySelector("#city-weather");
 const cityTempDisplay = document.querySelector("#city-temp");
 const convertBtn = document.querySelector("#convert-btn");
 
-getWeatherDataBtn.addEventListener("click", (event) => {
+const handleGetWeatherDataEvt = async (event) => {
   event.preventDefault();
   const city = cityInput.value;
 
-  getWeatherData(city)
-    .then((data) => processWeatherData(data))
-    .then((data) => {
-      cityNameDisplay.textContent = data.name;
-      cityWeatherDisplay.textContent = data.weather;
-      cityTempDisplay.textContent = data.temp;
-      convertBtn.hidden = false;
-    })
-    .catch((error) => console.log(error));
-});
+  let weatherData;
+  try {
+    weatherData = await getWeatherData(city);
+  } catch (error) {
+    console.log(error);
+  }
+
+  const processedWeatherData = processWeatherData(weatherData);
+  cityNameDisplay.textContent = processedWeatherData.name;
+  cityWeatherDisplay.textContent = processedWeatherData.weather;
+  cityTempDisplay.textContent = processedWeatherData.temp;
+  convertBtn.hidden = false;
+};
+
+getWeatherDataBtn.addEventListener("click", handleGetWeatherDataEvt);
 
 let currentTempUnit = "c";
 
