@@ -4,7 +4,13 @@ function getWeatherData(location) {
   return fetch(
     `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${API_KEY}&units=metric`,
     { mode: "cors" }
-  ).then((response) => response.json());
+  ).then((response) => {
+    if (!response.ok) {
+      throw Error("Couldn't match city");
+    }
+
+    return response.json();
+  });
 }
 
 function processWeatherData(weatherData) {
@@ -35,7 +41,8 @@ getWeatherDataBtn.addEventListener("click", (event) => {
       cityWeatherDisplay.textContent = data.weather;
       cityTempDisplay.textContent = data.temp;
       convertBtn.hidden = false;
-    });
+    })
+    .catch((error) => console.log(error));
 });
 
 let currentTempUnit = "c";
